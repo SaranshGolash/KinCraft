@@ -1,0 +1,767 @@
+.kincraft-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+  background-color: var(--color-soft-white);
+  box-shadow: 0 2px 10px rgba(44, 43, 39, 0.06);
+  font-family: var(--font-body);
+  transition: all 0.25s ease;
+}
+
+/* Material Symbols sizing helper */
+.kincraft-header .material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.kincraft-header .material-symbols-outlined.fill {
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+/* Common Container */
+.kincraft-nav-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Announcement & Utility Bar */
+.kincraft-top-bar {
+  background-color: var(--color-dark-forest);
+  color: var(--color-soft-white);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kincraft-top-bar-inner {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.kincraft-announcement {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kincraft-announcement .badge-icon {
+  color: var(--color-antique-gold);
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.kincraft-announcement-text {
+  font-weight: 500;
+  color: #e2e8e4;
+}
+
+.kincraft-announcement-text .highlight {
+  color: var(--color-antique-gold);
+  font-weight: 600;
+}
+
+.kincraft-top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.kincraft-top-link {
+  color: var(--color-antique-gold);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.kincraft-top-link:hover {
+  color: var(--color-soft-white);
+  text-decoration: underline;
+}
+
+.kincraft-top-divider {
+  opacity: 0.35;
+  color: var(--color-soft-white);
+}
+
+.kincraft-language-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: none;
+  border: none;
+  color: #e2e8e4;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.kincraft-language-btn:hover {
+  color: var(--color-antique-gold);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.kincraft-lang-dropdown {
+  position: absolute;
+  top: 36px;
+  right: 1.5rem;
+  background: var(--color-soft-white);
+  color: var(--color-charcoal);
+  border: 1px solid var(--color-warm-border);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(44, 43, 39, 0.12);
+  min-width: 170px;
+  padding: 0.35rem 0;
+  z-index: 1050;
+}
+
+.kincraft-lang-option {
+  width: 100%;
+  text-align: left;
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-charcoal);
+}
+
+.kincraft-lang-option:hover,
+.kincraft-lang-option.active {
+  background-color: var(--color-warm-ivory);
+  color: var(--color-deep-forest-green);
+  font-weight: 600;
+}
+
+/* Main Brand, Search & Actions Bar */
+.kincraft-main-bar {
+  background-color: var(--color-soft-white);
+  border-bottom: 1px solid var(--color-warm-border);
+  position: relative;
+}
+
+.kincraft-main-bar-inner {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* Brand Logo */
+.kincraft-brand-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.kincraft-brand-logo-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: linear-gradient(
+    135deg,
+    var(--color-deep-forest-green),
+    var(--color-dark-forest)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(47, 79, 62, 0.25);
+  color: var(--color-antique-gold);
+}
+
+.kincraft-brand-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.kincraft-brand-title {
+  font-family: var(--font-brand);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--color-deep-forest-green);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.kincraft-brand-tagline {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--color-terracotta);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* Search Bar */
+.kincraft-search-wrapper {
+  flex: 1;
+  max-width: 580px;
+  position: relative;
+}
+
+.kincraft-search-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-warm-ivory);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.5rem 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.kincraft-search-box:focus-within {
+  background-color: #ffffff;
+  border-color: var(--color-deep-forest-green);
+  box-shadow: 0 0 0 3px rgba(47, 79, 62, 0.12);
+}
+
+.kincraft-search-icon {
+  color: var(--color-muted-grey);
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+.kincraft-search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  color: var(--color-charcoal);
+}
+
+.kincraft-search-input::placeholder {
+  color: var(--color-muted-grey);
+  font-size: 0.82rem;
+  opacity: 0.85;
+}
+
+.kincraft-search-mic {
+  color: var(--color-muted-grey);
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: 0.15rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.kincraft-search-mic:hover,
+.kincraft-search-mic.listening {
+  color: var(--color-deep-forest-green);
+  background-color: rgba(47, 79, 62, 0.1);
+}
+
+/* Search Clear Button */
+.kincraft-search-clear {
+  background: none;
+  border: none;
+  color: var(--color-muted-grey);
+  cursor: pointer;
+  padding: 0.1rem;
+  display: flex;
+  align-items: center;
+  margin-right: 0.25rem;
+}
+
+.kincraft-search-clear:hover {
+  color: var(--color-charcoal);
+}
+
+/* Actions */
+.kincraft-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* Wishlist Button */
+.kincraft-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  color: var(--color-charcoal);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.kincraft-action-btn:hover {
+  background-color: var(--color-warm-ivory);
+  color: var(--color-deep-forest-green);
+}
+
+.kincraft-action-btn .badge-pill {
+  background-color: var(--color-terracotta);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  border-radius: 10px;
+  line-height: 1;
+}
+
+/* Cart Button */
+.kincraft-cart-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background-color: var(--color-warm-ivory);
+  border: 1px solid var(--color-warm-border);
+  padding: 0.45rem 0.85rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.kincraft-cart-btn:hover {
+  background-color: #efe8da;
+  border-color: #d6ccbe;
+  transform: translateY(-1px);
+}
+
+.kincraft-cart-icon {
+  color: var(--color-deep-forest-green);
+  font-size: 1.45rem;
+}
+
+.kincraft-cart-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.kincraft-cart-count {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-deep-forest-green);
+  line-height: 1.1;
+}
+
+.kincraft-cart-artisans {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--color-terracotta);
+  line-height: 1.1;
+}
+
+/* User Profile */
+.kincraft-user-wrapper {
+  position: relative;
+}
+
+.kincraft-user-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: none;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-align: left;
+}
+
+.kincraft-user-btn:hover {
+  background-color: var(--color-warm-ivory);
+}
+
+.kincraft-user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-muted-sage);
+  background-color: var(--color-deep-forest-green);
+  color: var(--color-soft-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.kincraft-user-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.kincraft-user-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-charcoal);
+  line-height: 1.1;
+}
+
+.kincraft-user-tier {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--color-muted-grey);
+  line-height: 1.1;
+}
+
+/* User Dropdown */
+.kincraft-user-dropdown {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background-color: var(--color-soft-white);
+  border: 1px solid var(--color-warm-border);
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(44, 43, 39, 0.12);
+  min-width: 220px;
+  padding: 0.5rem 0;
+  z-index: 1050;
+}
+
+.kincraft-user-dropdown-header {
+  padding: 0.5rem 1rem 0.75rem;
+  border-bottom: 1px solid var(--color-warm-border);
+}
+
+.kincraft-user-dropdown-header strong {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-charcoal);
+}
+
+.kincraft-user-dropdown-header span {
+  font-size: 0.72rem;
+  color: var(--color-terracotta);
+  font-weight: 600;
+}
+
+.kincraft-user-dropdown a,
+.kincraft-user-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  color: var(--color-charcoal);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.kincraft-user-dropdown a:hover,
+.kincraft-user-dropdown button:hover {
+  background-color: var(--color-warm-ivory);
+  color: var(--color-deep-forest-green);
+}
+
+.kincraft-user-dropdown hr {
+  margin: 0.4rem 0;
+  border: none;
+  border-top: 1px solid var(--color-warm-border);
+}
+
+/* Mobile Hamburger Toggle */
+.kincraft-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-deep-forest-green);
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 6px;
+}
+
+.kincraft-mobile-toggle:hover {
+  background-color: var(--color-warm-ivory);
+}
+
+/* Category Navigation Bar */
+.kincraft-category-bar {
+  background-color: var(--color-warm-ivory);
+  border-bottom: 1px solid var(--color-warm-border);
+}
+
+.kincraft-category-bar-inner {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.kincraft-categories-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.kincraft-categories-nav::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.kincraft-category-link {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-muted-grey);
+  text-decoration: none;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.kincraft-category-link:hover {
+  color: var(--color-deep-forest-green);
+}
+
+.kincraft-category-link.active {
+  color: var(--color-deep-forest-green);
+  font-weight: 700;
+  border-bottom-color: var(--color-deep-forest-green);
+}
+
+.kincraft-category-link .gi-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.25rem;
+  color: var(--color-antique-gold);
+  font-size: 0.9rem;
+  vertical-align: text-bottom;
+}
+
+.kincraft-storefront-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background-color: #eae3d5;
+  color: var(--color-deep-forest-green);
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  border: 1px solid #dfd6c6;
+  flex-shrink: 0;
+}
+
+.kincraft-storefront-badge .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-terracotta);
+}
+
+/* Ecosystem Quick-Switcher Bar */
+.kincraft-ecosystem-bar {
+  background-color: rgba(236, 232, 225, 0.75);
+  border-bottom: 1px solid rgba(229, 222, 210, 0.7);
+  font-size: 0.75rem;
+}
+
+.kincraft-ecosystem-bar-inner {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.kincraft-ecosystem-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-muted-grey);
+}
+
+.kincraft-ecosystem-label .hub-icon {
+  font-size: 0.95rem;
+  color: var(--color-deep-forest-green);
+}
+
+.kincraft-ecosystem-title {
+  font-weight: 600;
+  color: var(--color-charcoal);
+}
+
+.kincraft-ecosystem-links {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.kincraft-eco-link {
+  color: var(--color-muted-grey);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  font-size: 0.75rem;
+}
+
+.kincraft-eco-link:hover {
+  color: var(--color-deep-forest-green);
+}
+
+.kincraft-eco-link.active {
+  color: var(--color-deep-forest-green);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.kincraft-eco-bullet {
+  color: #bdb7ab;
+  font-size: 0.7rem;
+}
+
+/* MOBILE EXPANDABLE DRAWER */
+.kincraft-mobile-drawer {
+  display: none;
+  background-color: var(--color-soft-white);
+  border-bottom: 2px solid var(--color-warm-border);
+  padding: 1rem 1.5rem;
+  box-shadow: 0 8px 24px rgba(44, 43, 39, 0.1);
+  animation: slideDown 0.25s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.kincraft-mobile-search {
+  margin-bottom: 1rem;
+}
+
+.kincraft-mobile-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid var(--color-warm-border);
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.kincraft-mobile-cat-link {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--color-charcoal);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kincraft-mobile-cat-link:hover,
+.kincraft-mobile-cat-link.active {
+  background-color: var(--color-warm-ivory);
+  color: var(--color-deep-forest-green);
+  font-weight: 600;
+}
+
+.kincraft-mobile-eco {
+  border-top: 1px solid var(--color-warm-border);
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+@media (max-width: 1024px) {
+  .kincraft-user-text {
+    display: none;
+  }
+  .kincraft-storefront-badge {
+    display: none;
+  }
+  .kincraft-cart-artisans {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .kincraft-top-bar {
+    display: none;
+  }
+  .kincraft-category-bar {
+    display: none;
+  }
+  .kincraft-ecosystem-bar {
+    display: none;
+  }
+  .kincraft-search-wrapper {
+    display: none;
+  }
+  .kincraft-mobile-toggle {
+    display: block;
+  }
+  .kincraft-mobile-drawer.open {
+    display: block;
+  }
+  .kincraft-action-btn span:not(.material-symbols-outlined):not(.badge-pill) {
+    display: none;
+  }
+  .kincraft-cart-info {
+    display: none;
+  }
+  .kincraft-cart-btn {
+    padding: 0.45rem;
+  }
+}
