@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import KinCraftLogo from "./KinCraftLogo";
+import { useTheme } from "../context/ThemeContext";
 import "./NavBar.css";
 
 function NavBar() {
+  const { isDark, toggleTheme } = useTheme();
   // Navigation & filter states
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeEcosystem, setActiveEcosystem] = useState("storefront");
@@ -108,6 +110,21 @@ function NavBar() {
 
             {/* Right: Studio Switcher & Language Selector */}
             <div className="kincraft-top-bar-actions" ref={langRef}>
+              <button
+                type="button"
+                className="kincraft-top-theme-btn"
+                onClick={toggleTheme}
+                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              >
+                <span className="material-symbols-outlined text-xs">
+                  {isDark ? "light_mode" : "dark_mode"}
+                </span>
+                <span>{isDark ? "Light Mode" : "Dark Mode"}</span>
+              </button>
+
+              <span className="kincraft-top-divider">|</span>
+
               <a
                 href="#artisan-studio"
                 className="kincraft-top-link"
@@ -172,7 +189,7 @@ function NavBar() {
           <div className="kincraft-main-bar-inner">
             {/* Brand Identity */}
             <a href="/" className="kincraft-brand-link" aria-label="KinCraft Home">
-              <KinCraftLogo variant="horizontal" height={46} />
+              <KinCraftLogo variant={isDark ? "dark" : "horizontal"} height={46} />
             </a>
 
             {/* Central Search Bar */}
@@ -214,6 +231,20 @@ function NavBar() {
 
             {/* Right Action Icons: Wishlist, Cart & Profile */}
             <div className="kincraft-header-actions">
+              {/* Theme Toggle Button */}
+              <button
+                type="button"
+                className="kincraft-theme-toggle-btn"
+                onClick={toggleTheme}
+                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              >
+                <span className="material-symbols-outlined theme-icon">
+                  {isDark ? "light_mode" : "dark_mode"}
+                </span>
+                <span className="theme-toggle-text">{isDark ? "Light" : "Dark"}</span>
+              </button>
+
               {/* Wishlist */}
               <a
                 href="#wishlist"
@@ -466,6 +497,19 @@ function NavBar() {
               )}
             </a>
           ))}
+        </div>
+
+        <div className="kincraft-mobile-theme">
+          <button
+            type="button"
+            className="kincraft-mobile-theme-btn"
+            onClick={toggleTheme}
+          >
+            <span className="material-symbols-outlined theme-icon">
+              {isDark ? "light_mode" : "dark_mode"}
+            </span>
+            <span>Switch to {isDark ? "Light Mode" : "Dark Mode"}</span>
+          </button>
         </div>
 
         <div className="kincraft-mobile-eco">

@@ -41,6 +41,65 @@
   --color-on-surface-variant: #66685F;
 }
 
+/* ==========================================================================
+   KinCraft Dark Mode Tokens & Overrides (Forest Noir & Warm Gold)
+   ========================================================================== */
+:root.dark,
+html.dark,
+body.dark {
+  --color-deep-forest-green: #3D6A54;
+  --color-dark-forest: #14221A;
+  --color-terracotta: #D47963;
+  --color-antique-gold: #E5B254;
+  --color-muted-sage: #9DB0A4;
+  --color-warm-ivory: #131E18;
+  --color-soft-white: #1A2820;
+  --color-charcoal: #F5EFE6;
+  --color-muted-grey: #A3B5AA;
+  --color-warm-border: #293E32;
+
+  --color-primary: #7EB09B;
+  --color-primary-container: #263E32;
+  --color-on-primary: #121E17;
+  --color-primary-fixed-dim: #9DB0A4;
+  --color-secondary: #E0856E;
+  --color-secondary-container: #5C2B1F;
+  --color-secondary-fixed: #51251A;
+  --color-on-secondary-fixed: #FFDCD3;
+  --color-tertiary: #E5B254;
+  --color-tertiary-container: #4D350B;
+  --color-tertiary-fixed: #FFE0A6;
+  --color-surface: #1A2820;
+  --color-surface-container-low: #131E18;
+  --color-surface-container: #1F3027;
+  --color-surface-container-high: #273D32;
+  --color-surface-container-highest: #304A3E;
+  --color-surface-container-lowest: #16241D;
+  --color-on-surface: #F5EFE6;
+  --color-on-surface-variant: #A3B5AA;
+}
+
+html.dark body,
+body.dark {
+  background-color: var(--color-warm-ivory);
+  color: var(--color-charcoal);
+}
+
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6,
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6 {
+  color: #F7F3EB;
+}
+
 body {
   background-color: var(--color-warm-ivory);
   color: var(--color-charcoal);
@@ -94,6 +153,7 @@ h1, h2, h3, h4, h5, h6, .brand-font {
 .text-tertiary-fixed { color: var(--color-antique-gold) !important; }
 .text-tertiary-container { color: #8F6010 !important; }
 .bg-tertiary { background-color: var(--color-antique-gold) !important; }
+.bg-tertiary-fixed, .bg-tertiary-fixed-dim { background-color: var(--color-antique-gold) !important; }
 
 .bg-surface { background-color: var(--color-soft-white) !important; }
 .bg-surface-container-low { background-color: var(--color-warm-ivory) !important; }
@@ -194,4 +254,130 @@ h1, h2, h3, h4, h5, h6, .brand-font {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+}
+
+/* ==========================================================================
+   Dark Mode Component & Utility Overrides
+   ========================================================================== */
+html.dark .bg-surface,
+body.dark .bg-surface {
+  background-color: var(--color-surface) !important;
+}
+
+html.dark .bg-surface-container-low,
+body.dark .bg-surface-container-low {
+  background-color: var(--color-surface-container-low) !important;
+}
+
+html.dark .bg-surface-container,
+body.dark .bg-surface-container {
+  background-color: var(--color-surface-container) !important;
+}
+
+html.dark .bg-surface-container-high,
+body.dark .bg-surface-container-high {
+  background-color: var(--color-surface-container-high) !important;
+}
+
+html.dark .bg-surface-container-highest,
+body.dark .bg-surface-container-highest {
+  background-color: var(--color-surface-container-highest) !important;
+}
+
+html.dark .bg-surface-container-lowest,
+body.dark .bg-surface-container-lowest {
+  background-color: var(--color-surface-container-lowest) !important;
+}
+
+html.dark .text-on-surface,
+body.dark .text-on-surface {
+  color: var(--color-on-surface) !important;
+}
+
+html.dark .text-on-surface-variant,
+body.dark .text-on-surface-variant {
+  color: var(--color-on-surface-variant) !important;
+}
+
+html.dark .text-primary,
+body.dark .text-primary {
+  color: var(--color-primary) !important;
+}
+
+html.dark .bg-primary,
+body.dark .bg-primary {
+  background-color: #2F4F3E !important;
+  color: var(--color-soft-white) !important;
+}
+
+html.dark .bg-primary:hover,
+body.dark .bg-primary:hover {
+  background-color: #385E4B !important;
+}
+
+html.dark .text-secondary,
+body.dark .text-secondary {
+  color: var(--color-secondary) !important;
+}
+
+html.dark .bg-secondary-fixed,
+body.dark .bg-secondary-fixed {
+  background-color: rgba(224, 133, 110, 0.22) !important;
+  color: #FFDCD3 !important;
+}
+
+html.dark .text-on-secondary-fixed,
+body.dark .text-on-secondary-fixed {
+  color: #FFDCD3 !important;
+}
+
+html.dark .shadow-sm,
+body.dark .shadow-sm,
+html.dark .shadow-md,
+body.dark .shadow-md,
+html.dark .shadow-xl,
+body.dark .shadow-xl {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Floating Quick Theme Toggle Button */
+.kincraft-floating-theme-toggle {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 9999px;
+  background-color: var(--color-soft-white);
+  color: var(--color-charcoal);
+  border: 1px solid var(--color-warm-border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+}
+
+.kincraft-floating-theme-toggle:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  border-color: var(--color-antique-gold);
+}
+
+.kincraft-floating-theme-toggle .theme-icon {
+  font-size: 1.15rem;
+  color: var(--color-antique-gold);
+}
+
+html.dark .kincraft-floating-theme-toggle,
+body.dark .kincraft-floating-theme-toggle {
+  background-color: #1A2820;
+  color: #F5EFE6;
+  border-color: #2F4D3C;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
 }

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -155,6 +156,7 @@ function Landing() {
       </section>
       <CraftCategories />
       <Spotlight />
+      <Products />
       <Footer />
     </>
   );
@@ -403,6 +405,411 @@ function Spotlight() {
         </div>
       </section>
     </>
+  );
+}
+
+const productsData = [
+  {
+    id: "molela-terracotta",
+    location: "GI Tagged • Molela",
+    material: "Terracotta Clay",
+    timeToMake: "Handmade in 7 days",
+    category: "Terracotta & Clay",
+    filter: ["all", "gi", "home", "living"],
+    name: "Surya Dev Votive Terracotta Wall Icon",
+    crafterName: "Crafted by Smt. Kamala Devi • Molela, Rajasthan",
+    price: "₹1,850",
+    rating: 4.9,
+    reviews: 42,
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDeoLOovA1aF1jr4ZEo6yLy0mJ0KQWSpWHVCFn4z4OFWXmpUX6NfnbCk0mHNkCwcS8UiXSDmXvlwCMjNyXmGnmGXA5VoIqGVnKAWU9CKw-CSDIxPRQIMXhU5elo3PUkEXHN9BBMh60HSVJ0bVPM35SMp_GU4VBaBfgpCqJXzj7qMApNV0CU7roM94lRCBuQJsWdinRtzMOuuUy5uY9a1ZnWqHvU8g6G6LljbSoNsxyp",
+    alt: "Authentic Molela votive terracotta clay wall plaque depicting a sacred sun and village deity, textured raw clay finish, rich reddish ochre tone, handcrafted in Rajasthan."
+  },
+  {
+    id: "dhabla-shawl",
+    location: "GI Tagged • Kutch",
+    material: "Indigenous Desi Wool",
+    timeToMake: "Handmade in 14 days",
+    category: "Handloom Textiles",
+    filter: ["all", "gi", "wearable", "living"],
+    name: "Ancestral Handspun Dhabla Wool Shawl",
+    crafterName: "Crafted by Devji Premji Vankar • Bhujodi, Gujarat",
+    price: "₹3,850",
+    rating: 5.0,
+    reviews: 68,
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBbgVKvzxHshb8tYIgls_5oWQj6AzI_CEXcY1rmcG3oOVm_J7OFiDogK68eLD6QmNFrHRuuBoATEpzC7f8yz_J31L3jOqg0tkCWvMGR1BDkPVD7FRIe9ydYz64rEUReSHQRSOsh85IQwfsRS-bCEVms_ShXFGvoFZXSUAUXgPNJZ4AsMOZ3aUKj_3XeIOpkbFgX4Fh0nLzBdbHPxY6bFejTw4V5pZHJ2fZGIQgEJIqm",
+    alt: "Traditional Kutch handwoven desi wool Dhabla shawl with mirrorwork borders and geometric extra-weft thread motifs in organic madder red and natural sheep white."
+  },
+  {
+    id: "bastar-nandi",
+    location: "GI Tagged • Bastar",
+    material: "Bell Metal & Beeswax",
+    timeToMake: "Handmade in 9 days",
+    category: "Dhokra Bell Metal",
+    filter: ["all", "gi", "home", "living"],
+    name: "Lost-Wax Bastar Nandi Sculpture",
+    crafterName: "Crafted by Somaru Ram Kashyap • Kondagaon, Chhattisgarh",
+    price: "₹2,200",
+    rating: 4.8,
+    reviews: 29,
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuA4inTY7DKQsHH8ROT0MjyUfxTFZsXvdkmlL-TiButdxGCYJ5gCV8sAhw45qklQKrUYwN9Mxuk854AkKvGrkFfHmgVW6zQH_oA_vzhGqetcx8BZ75zKsF4uXtF-_pjJn6dY-jz4Hvnbb4WNH5JK1_8Xz0Vjf3O3qZxrCeS0JXy4TdBjs5-yl0qb_hvtJmfoSAvH5BEaSQ0s65F9DKgGWNYlYcSBGR1w8wIWQD-kJebY",
+    alt: "Bastar Dhokra cast brass sacred bull sculpture with delicate hand-coiled wax cord patterns and aged golden patina resting on warm wooden table."
+  },
+  {
+    id: "pochampally-ikat",
+    location: "GI Tagged • Telangana",
+    material: "100% Mulberry Silk",
+    timeToMake: "Handmade in 11 days",
+    category: "Handloom Textiles",
+    filter: ["all", "gi", "wearable"],
+    name: "Double-Ikat Silk Chevron Stole",
+    crafterName: "Crafted by B. Anjaiah Weavers' Trust • Bhoodan Pochampally",
+    price: "₹2,850",
+    rating: 4.9,
+    reviews: 53,
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBR1RD9TVnjiTcfxZa9y8IaJFYhKJhaxesQOdPLHCY1FgepM1F19C0RTAH14qzHt7MFbIv8IHYFY6BAVbSGu_JRt-bq3TUp0FBZrNSPT5uvNUNwOwRWbfuAq-HoPys805CpXRNPVAGpip2GDbnOTijPBW5iShZfJ_cDb5-W0tbco85h86fANfokAGay85jGKgxnkQiCJYU3RlitpavG2jm1iMor2o9v-ltkgOs9OHC5",
+    alt: "Pochampally double ikat silk fabric stole in rich turmeric yellow and deep madder red geometric chevron weaves, soft folded drape texture."
+  },
+  {
+    id: "channapatna-nesting",
+    location: "GI Tagged • Karnataka",
+    material: "Hale Wood & Veg Lac",
+    timeToMake: "Handmade in 3 days",
+    category: "Lacquer Woodcraft",
+    filter: ["all", "gi", "home"],
+    name: "Geometric Lacquer Architectural Nesting Set",
+    crafterName: "Crafted by Syed Noor Lathe Studio • Channapatna, KA",
+    price: "₹1,150",
+    rating: 4.7,
+    reviews: 31,
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCX8tO6L07diEGA4-6ZPqSKhJhNiE3vhoSxaxLafj91Qtw6jch-pRZ2H5fqqmPgHf0S2-Szn-wtLrpFLgyyi7Fj8TL8ROZk8lTY98ZyRt8c5J6CymYK7Vkuw2m4hQw09xh8mrcBdge_X99PpQAfPa0Rjn_RpN8y2mu0slMXyc_6wi2R41ewS1nJHZfA5S-M2AFOdh8BLfZLrocySZbOtfiyLarTudVsDnFf-WtJCS7r",
+    alt: "Channapatna turned wood stacking toy made of ivory wood with smooth natural vegetable lac finishes in warm ochre, forest green and natural terracotta red."
+  },
+  {
+    id: "mayurbhanj-sabai",
+    location: "Heritage Cluster • Odisha",
+    material: "Sun-Cured Sabai Grass",
+    timeToMake: "Handmade in 4 days",
+    category: "Natural Fiber",
+    filter: ["all", "home", "living"],
+    name: "Mayurbhanj Coiled Sabai Floor Planter",
+    crafterName: "Crafted by Maa Tarini Women SHG • Baripada, Odisha",
+    price: "₹950",
+    rating: 4.9,
+    reviews: 47,
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuASioNwOFrAVM9WqKtyYV50riKGJkSvXJjNkd7_kav496K6WAbyszUuVvGpgP53u24zkI8O7wk8IiEUJtN2eqNsIaZA0Zolb55M5AvVYM_WXdTTRbzngS68BuFs1B2jJoiubl9rbVWldWBWXBw0HvYvoLuE1aNp304-aiiD3jOmClDdAyGU4iQ1eahevkhtb842wEU_foylQIj472tuM5D7lMEkARaPwOPw7cRdmloT",
+    alt: "Hand braided Sabai grass tall woven storage planter basket with dark forest green cotton interwoven handles, displayed in warm earthy sunlit room."
+  }
+];
+
+function Products() {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [addedItem, setAddedItem] = useState(null);
+
+  const filterTabs = [
+    { id: "all", label: "All Heritage" },
+    { id: "gi", label: "GI Certified" },
+    { id: "living", label: "Living Heritage" },
+    { id: "home", label: "Home & Living" },
+    { id: "wearable", label: "Wearable Art" },
+  ];
+
+  const handleAddToCart = (productName) => {
+    setAddedItem(productName);
+    setTimeout(() => setAddedItem(null), 2500);
+  };
+
+  const filteredProducts =
+    activeFilter === "all"
+      ? productsData
+      : productsData.filter((p) => p.filter && p.filter.includes(activeFilter));
+
+  return (
+    <>
+      {addedItem && (
+        <div className="fixed bottom-6 right-6 z-50 bg-primary text-on-primary px-4 py-3 rounded-lg shadow-xl flex items-center gap-2">
+          <span className="material-symbols-outlined text-tertiary">
+            check_circle
+          </span>
+          <span className="font-label-md text-label-md">
+            Added "{addedItem}" to bag
+          </span>
+        </div>
+      )}
+      <section className="w-full py-space-xl bg-surface" id="marketplace-grid">
+        <div className="max-w-7xl mx-auto px-margin">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
+            <div>
+              <span className="font-label-md text-label-md uppercase tracking-widest text-secondary">
+                Curated Works
+              </span>
+              <h2 className="font-headline-lg text-headline-lg text-on-surface mt-1">
+                Grassroots Masterpieces
+              </h2>
+            </div>
+            <div
+              className="flex items-center gap-space-xs overflow-x-auto pb-1 no-scrollbar"
+              id="filter-chip-container"
+            >
+              {filterTabs.map((tab) => {
+                const isActive = activeFilter === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setActiveFilter(tab.id)}
+                    className={`filter-tab px-4 py-2 rounded-full font-label-sm text-label-sm whitespace-nowrap transition-colors cursor-pointer ${
+                      isActive
+                        ? "bg-primary text-on-primary"
+                        : "bg-surface-container-high text-on-surface-variant hover:text-on-surface"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+            {filteredProducts.map((prod) => (
+              <Product
+                key={prod.id}
+                {...prod}
+                onAddToCart={() => handleAddToCart(prod.name)}
+              />
+            ))}
+          </div>
+          <div className="flex justify-center mt-space-xl">
+            <button
+              type="button"
+              className="px-8 py-3.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-label-lg text-label-lg flex items-center gap-2 transition-colors cursor-pointer"
+            >
+              <span>Load 36 More Verified Works</span>
+              <span className="material-symbols-outlined text-lg">refresh</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Transparency & Fair-Trade Impact Banner */}
+      <section className="w-full py-space-xl bg-surface-container-low">
+        <div className="max-w-7xl mx-auto px-margin">
+          <div className="bg-surface-container-lowest rounded-2xl shadow-md p-space-lg lg:p-space-xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+              <div className="lg:col-span-5 flex flex-col gap-space-sm">
+                <span className="font-label-sm text-label-sm text-secondary uppercase tracking-widest font-bold">
+                  Uncompromising Transparency
+                </span>
+                <h2 className="font-headline-lg text-headline-lg text-on-surface">
+                  Where Every ₹1,000 You Spend Goes
+                </h2>
+                <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                  Traditional handicraft supply chains surrender up to 75% of
+                  your money to regional agents, urban galleries, and logistics
+                  brokers. GramCraft's direct cooperative model rewrites that
+                  equation.
+                </p>
+                <div className="flex items-center gap-2 text-primary font-label-md text-label-md mt-2">
+                  <span className="material-symbols-outlined text-tertiary">
+                    verified
+                  </span>
+                  <span>
+                    Audited under India Artisan Protection Protocol (IAPP)
+                  </span>
+                </div>
+              </div>
+              <div className="lg:col-span-7 flex flex-col gap-space-md bg-surface-container-low p-space-lg rounded-xl">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between font-label-md text-label-md">
+                    <span className="text-primary font-bold">
+                      Direct Payout to Artisan Bank Account
+                    </span>
+                    <span className="text-primary font-bold">₹900 (90%)</span>
+                  </div>
+                  <div className="w-full h-6 bg-surface-container-highest rounded-full overflow-hidden flex">
+                    <div
+                      className="h-full bg-primary transition-all duration-1000"
+                      style={{ width: "90%" }}
+                    />
+                    <div
+                      className="h-full bg-tertiary-fixed-dim transition-all duration-1000"
+                      style={{ width: "10%" }}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+                    <span>Direct cluster escrow settlement</span>
+                    <span>Platform maintenance &amp; packing</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-2">
+                  <div className="bg-surface-container-lowest p-3 rounded-lg flex flex-col">
+                    <div className="flex items-center gap-1.5 text-primary">
+                      <span className="material-symbols-outlined text-lg">
+                        account_balance_wallet
+                      </span>
+                      <span className="font-headline-sm text-headline-sm">
+                        ₹900
+                      </span>
+                    </div>
+                    <span className="font-label-md text-label-md text-on-surface font-semibold mt-1">
+                      Artisan Direct
+                    </span>
+                    <span className="font-label-sm text-label-sm text-on-surface-variant mt-0.5">
+                      Direct sovereign wage into village cooperative
+                    </span>
+                  </div>
+                  <div className="bg-surface-container-lowest p-3 rounded-lg flex flex-col">
+                    <div className="flex items-center gap-1.5 text-tertiary">
+                      <span className="material-symbols-outlined text-lg">
+                        cloud_done
+                      </span>
+                      <span className="font-headline-sm text-headline-sm">
+                        ₹100
+                      </span>
+                    </div>
+                    <span className="font-label-md text-label-md text-on-surface font-semibold mt-1">
+                      Platform Tech
+                    </span>
+                    <span className="font-label-sm text-label-sm text-on-surface-variant mt-0.5">
+                      High-speed escrow server &amp; GI verification tags
+                    </span>
+                  </div>
+                  <div className="bg-surface-container-lowest p-3 rounded-lg flex flex-col">
+                    <div className="flex items-center gap-1.5 text-secondary">
+                      <span className="material-symbols-outlined text-lg">
+                        block
+                      </span>
+                      <span className="font-headline-sm text-headline-sm">
+                        ₹0
+                      </span>
+                    </div>
+                    <span className="font-label-md text-label-md text-on-surface font-semibold mt-1">
+                      Middlemen Cuts
+                    </span>
+                    <span className="font-label-sm text-label-sm text-on-surface-variant mt-0.5">
+                      Zero city brokers or wholesale skimming
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function Product({
+  id,
+  location,
+  material,
+  timeToMake,
+  category,
+  name,
+  crafterName,
+  price,
+  rating = 4.9,
+  reviews = 42,
+  image,
+  alt,
+  onAddToCart,
+}) {
+  const [isWished, setIsWished] = useState(false);
+
+  return (
+    <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-shadow">
+      <div className="relative w-full aspect-[4/5] overflow-hidden">
+        <img
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          alt={alt || name}
+          data-alt={alt || name}
+          src={image}
+        />
+        <div className="absolute top-3 left-3 flex flex-col gap-1">
+          {location && (
+            <span className="bg-primary/90 text-on-primary font-label-sm text-label-sm px-2.5 py-1 rounded">
+              {location}
+            </span>
+          )}
+          {material && (
+            <span className="bg-surface-container-lowest/90 text-on-surface font-label-sm text-label-sm px-2.5 py-0.5 rounded">
+              {material}
+            </span>
+          )}
+        </div>
+        <button
+          type="button"
+          aria-label="Add to wishlist"
+          onClick={() => setIsWished(!isWished)}
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface-container-lowest/80 hover:bg-surface-container-lowest text-secondary flex items-center justify-center transition-colors shadow-sm cursor-pointer"
+        >
+          <span
+            className="material-symbols-outlined text-lg"
+            style={isWished ? { fontVariationSettings: "'FILL' 1" } : {}}
+          >
+            favorite
+          </span>
+        </button>
+        {timeToMake && (
+          <div className="absolute bottom-3 left-3">
+            <span className="bg-tertiary-container text-on-tertiary font-label-sm text-label-sm px-2.5 py-1 rounded">
+              {timeToMake}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className="p-space-md flex flex-col flex-1 gap-space-xs">
+        <div className="flex items-center justify-between">
+          <span className="font-label-sm text-label-sm text-secondary uppercase tracking-wider">
+            {category}
+          </span>
+          <div className="flex items-center text-secondary font-label-sm text-label-sm gap-0.5">
+            <span
+              className="material-symbols-outlined text-sm"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              star
+            </span>
+            <span>{rating}</span>
+            <span className="text-on-surface-variant font-normal">
+              ({reviews})
+            </span>
+          </div>
+        </div>
+        <h3 className="font-headline-sm text-headline-sm text-on-surface">
+          {name}
+        </h3>
+        <p className="font-label-sm text-label-sm text-on-surface-variant line-clamp-1">
+          {crafterName}
+        </p>
+        <div className="mt-auto pt-space-sm flex items-center justify-between">
+          <div>
+            <span className="font-label-sm text-label-sm text-on-surface-variant">
+              Direct Artisan Price
+            </span>
+            <div className="font-price-display text-price-display text-primary">
+              {price}
+            </div>
+          </div>
+          <button
+            type="button"
+            className="add-btn px-4 py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md flex items-center gap-1.5 transition-all cursor-pointer"
+            onClick={onAddToCart}
+          >
+            <span className="material-symbols-outlined text-base">
+              local_mall
+            </span>
+            <span>Add to Cart</span>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 export default Landing;

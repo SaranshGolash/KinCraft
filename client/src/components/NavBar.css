@@ -765,3 +765,313 @@
     padding: 0.45rem;
   }
 }
+
+/* Theme Toggle Button */
+.kincraft-theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--color-warm-ivory);
+  color: var(--color-charcoal);
+  border: 1px solid var(--color-warm-border);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.kincraft-theme-toggle-btn:hover {
+  background-color: #efe8da;
+  color: var(--color-deep-forest-green);
+  border-color: var(--color-deep-forest-green);
+  transform: translateY(-1px);
+}
+
+.kincraft-theme-toggle-btn .theme-icon {
+  font-size: 1.15rem;
+  color: var(--color-antique-gold);
+  transition: transform 0.3s ease;
+}
+
+.kincraft-theme-toggle-btn:hover .theme-icon {
+  transform: rotate(20deg) scale(1.15);
+}
+
+/* Top bar theme button */
+.kincraft-top-theme-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+  padding: 0.22rem 0.65rem;
+  color: #e2e8e4;
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.kincraft-top-theme-btn:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: var(--color-antique-gold);
+  border-color: var(--color-antique-gold);
+}
+
+.kincraft-top-theme-btn .material-symbols-outlined {
+  color: var(--color-antique-gold);
+}
+
+/* Mobile Theme Toggle Button */
+.kincraft-mobile-theme {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-warm-border);
+}
+
+.kincraft-mobile-theme-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface);
+  border: 1px solid var(--color-warm-border);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.kincraft-mobile-theme-btn .theme-icon {
+  color: var(--color-antique-gold);
+}
+
+/* NAVBAR DARK MODE STYLES */
+html.dark .kincraft-header,
+body.dark .kincraft-header {
+  background-color: #17261E;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid #283F32;
+}
+
+html.dark .kincraft-top-bar,
+body.dark .kincraft-top-bar {
+  background-color: #0E1812;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+html.dark .kincraft-search-box,
+body.dark .kincraft-search-box {
+  background-color: #1E3328;
+  border-color: #2F4D3C;
+}
+
+html.dark .kincraft-search-box:focus-within,
+body.dark .kincraft-search-box:focus-within {
+  border-color: var(--color-antique-gold);
+  background-color: #243C30;
+  box-shadow: 0 0 0 3px rgba(217, 164, 65, 0.2);
+}
+
+html.dark .kincraft-search-input,
+body.dark .kincraft-search-input {
+  color: #F5EFE6;
+}
+
+html.dark .kincraft-search-input::placeholder,
+body.dark .kincraft-search-input::placeholder {
+  color: #8CA093;
+}
+
+html.dark .kincraft-search-icon,
+body.dark .kincraft-search-icon,
+html.dark .kincraft-search-mic,
+body.dark .kincraft-search-mic {
+  color: #8CA093;
+}
+
+html.dark .kincraft-search-mic:hover,
+body.dark .kincraft-search-mic:hover {
+  color: var(--color-antique-gold);
+  background-color: rgba(217, 164, 65, 0.15);
+}
+
+html.dark .kincraft-theme-toggle-btn,
+body.dark .kincraft-theme-toggle-btn {
+  background-color: #1E3328;
+  color: #F5EFE6;
+  border-color: #2F4D3C;
+}
+
+html.dark .kincraft-theme-toggle-btn:hover,
+body.dark .kincraft-theme-toggle-btn:hover {
+  background-color: #263E32;
+  color: var(--color-antique-gold);
+  border-color: var(--color-antique-gold);
+}
+
+html.dark .kincraft-action-btn,
+body.dark .kincraft-action-btn {
+  color: #F5EFE6;
+}
+
+html.dark .kincraft-action-btn:hover,
+body.dark .kincraft-action-btn:hover {
+  background-color: #1E3328;
+  color: var(--color-antique-gold);
+}
+
+html.dark .kincraft-cart-btn,
+body.dark .kincraft-cart-btn {
+  background-color: #1E3328;
+  border-color: #2F4D3C;
+}
+
+html.dark .kincraft-cart-btn:hover,
+body.dark .kincraft-cart-btn:hover {
+  background-color: #263E32;
+  border-color: var(--color-antique-gold);
+}
+
+html.dark .kincraft-cart-icon,
+body.dark .kincraft-cart-icon {
+  color: var(--color-antique-gold);
+}
+
+html.dark .kincraft-cart-count,
+body.dark .kincraft-cart-count {
+  color: #F5EFE6;
+}
+
+html.dark .kincraft-cart-artisans,
+body.dark .kincraft-cart-artisans {
+  color: #9DB0A4;
+}
+
+html.dark .kincraft-user-btn,
+body.dark .kincraft-user-btn {
+  background-color: #1E3328;
+  border-color: #2F4D3C;
+}
+
+html.dark .kincraft-user-btn:hover,
+body.dark .kincraft-user-btn:hover {
+  background-color: #263E32;
+  border-color: #3F604D;
+}
+
+html.dark .kincraft-user-name,
+body.dark .kincraft-user-name {
+  color: #F5EFE6;
+}
+
+html.dark .kincraft-user-tier,
+body.dark .kincraft-user-tier {
+  color: #9DB0A4;
+}
+
+html.dark .kincraft-user-dropdown,
+body.dark .kincraft-user-dropdown,
+html.dark .kincraft-lang-dropdown,
+body.dark .kincraft-lang-dropdown {
+  background-color: #17261E;
+  border-color: #2F4D3C;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .kincraft-user-dropdown-header,
+body.dark .kincraft-user-dropdown-header {
+  border-bottom-color: #2F4D3C;
+}
+
+html.dark .kincraft-user-dropdown-header strong,
+body.dark .kincraft-user-dropdown-header strong {
+  color: #F5EFE6;
+}
+
+html.dark .kincraft-user-item,
+body.dark .kincraft-user-item,
+html.dark .kincraft-lang-option,
+body.dark .kincraft-lang-option {
+  color: #E2E8E4;
+}
+
+html.dark .kincraft-user-item:hover,
+body.dark .kincraft-user-item:hover,
+html.dark .kincraft-lang-option:hover,
+body.dark .kincraft-lang-option:hover {
+  background-color: #20352A;
+  color: var(--color-antique-gold);
+}
+
+html.dark .kincraft-category-bar,
+body.dark .kincraft-category-bar {
+  background-color: #132018;
+  border-top-color: #22372A;
+  border-bottom-color: #22372A;
+}
+
+html.dark .kincraft-category-pill,
+body.dark .kincraft-category-pill {
+  color: #B5C7BA;
+}
+
+html.dark .kincraft-category-pill:hover,
+body.dark .kincraft-category-pill:hover {
+  color: #F5EFE6;
+  background-color: #1E3328;
+}
+
+html.dark .kincraft-category-pill.active,
+body.dark .kincraft-category-pill.active {
+  background-color: var(--color-antique-gold);
+  color: #142019;
+}
+
+html.dark .kincraft-ecosystem-bar,
+body.dark .kincraft-ecosystem-bar {
+  background-color: #101B14;
+  border-bottom-color: #22372A;
+}
+
+html.dark .kincraft-eco-item,
+body.dark .kincraft-eco-item {
+  color: #9DB0A4;
+}
+
+html.dark .kincraft-eco-item:hover,
+body.dark .kincraft-eco-item:hover {
+  color: #F5EFE6;
+}
+
+html.dark .kincraft-eco-item.active,
+body.dark .kincraft-eco-item.active {
+  color: var(--color-antique-gold);
+  border-bottom-color: var(--color-antique-gold);
+}
+
+html.dark .kincraft-mobile-drawer,
+body.dark .kincraft-mobile-drawer {
+  background-color: #17261E;
+  border-bottom-color: #2F4D3C;
+}
+
+html.dark .kincraft-mobile-cat-link,
+body.dark .kincraft-mobile-cat-link {
+  color: #E2E8E4;
+}
+
+html.dark .kincraft-mobile-cat-link:hover,
+body.dark .kincraft-mobile-cat-link:hover {
+  background-color: #20352A;
+  color: var(--color-antique-gold);
+}
