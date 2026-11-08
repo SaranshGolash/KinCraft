@@ -345,6 +345,99 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+// ============================================================================
+// AUTHENTICATION ROUTES
+// ============================================================================
+
+// POST /api/auth/login
+app.post("/api/auth/login", async (req, res) => {
+  const { identifier, password, role = "Customer" } = req.body;
+
+  if (!identifier) {
+    return res.status(400).json({ success: false, message: "Email or mobile number is required" });
+  }
+
+  try {
+    if (isDbConnected) {
+      const userRes = await pool.query(
+        "SELECT id, name, email, role, membership_tier, avatar_initials FROM users WHERE email = $1 OR phone = $1",
+        [identifier]
+      );
+
+      if (userRes.rows.length > 0) {
+        return res.json({ success: true, user: userRes.rows[0], message: "Authentication successful" });
+      }
+    }
+
+    // Fallback or In-Memory authentication
+    const isMeera = identifier.toLowerCase().includes("meera");
+    const name = isMeera ? "Meera Verma" : identifier.split("@")[0].replace(".", " ").replace(/\b\w/g, l => l.toUpperCase());
+    const initials = isMeera ? "MV" : (identifier.slice(0, 2).toUpperCase());
+    const tier = role === "Artisan" ? "Master Artisan • Verified" : role === "Admin" ? "Compliance Officer" : "Patron Member • Tier 1";
+
+    const user = {
+      id: 1,
+      name,
+      email: identifier.includes("@") ? identifier : `${identifier}@patron.kincraft.org`,
+      role,
+      membership_tier: tier,
+      avatar_initials: initials
+    };
+
+    return res.json({ success: true, user, message: "Authentication successful" });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// POST /api/auth/register
+app.post("/api/auth/register", async (req, res) => {
+  const { name, email, password, role = "Customer", craftCluster = "" } = req.body;
+
+  if (!name || !email) {
+    return res.status(400).json({ success: false, message: "Name and email are required" });
+  }
+
+  try {
+    const initials = name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) || "KP";
+    const tier = role === "Artisan" ? "Artisan Guild Member" : "Patron Member • Tier 1";
+
+    if (isDbConnected) {
+      const insertRes = await pool.query(`
+        INSERT INTO users (name, email, role, membership_tier, avatar_initials)
+        VALUES ($1, $2, $3, $4, $5)
+        ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role
+        RETURNING id, name, email, role, membership_tier, avatar_initials
+      `, [name, email, role, tier, initials]);
+
+      return res.json({ success: true, user: insertRes.rows[0], message: "Registration successful" });
+    }
+
+    const newUser = {
+      id: Date.now(),
+      name,
+      email,
+      role,
+      membership_tier: tier,
+      avatar_initials: initials,
+      craft_cluster: craftCluster
+    };
+
+    return res.json({ success: true, user: newUser, message: "Registration successful" });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// GET /api/auth/me
+app.get("/api/auth/me", (req, res) => {
+  res.json({
+    success: false,
+    user: null,
+    message: "No active session"
+  });
+});
+
 // Categories (Indigenous Craft Traditions)
 app.get("/api/categories", async (req, res) => {
   try {

@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import KinCraftLogo from "./KinCraftLogo";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
 import "./NavBar.css";
 
 function NavBar() {
   const { isDark, toggleTheme } = useTheme();
+  const { user, isAuthenticated, logout } = useAuth();
   // Navigation & filter states
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeEcosystem, setActiveEcosystem] = useState("storefront");
@@ -17,10 +20,10 @@ function NavBar() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Cart state
-  const [cartItemsCount] = useState(3);
-  const [cartArtisansCount] = useState(2);
-  const [wishlistCount] = useState(5);
+  // Cart & Wishlist state (active only for authenticated patron sessions)
+  const cartItemsCount = isAuthenticated && user ? 3 : 0;
+  const cartArtisansCount = isAuthenticated && user ? 2 : 0;
+  const wishlistCount = isAuthenticated && user ? 5 : 0;
 
   const langRef = useRef(null);
   const userMenuRef = useRef(null);
@@ -115,7 +118,9 @@ function NavBar() {
                 className="kincraft-top-theme-btn"
                 onClick={toggleTheme}
                 title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                aria-label={
+                  isDark ? "Switch to Light Mode" : "Switch to Dark Mode"
+                }
               >
                 <span className="material-symbols-outlined text-xs">
                   {isDark ? "light_mode" : "dark_mode"}
@@ -188,8 +193,15 @@ function NavBar() {
         <div className="kincraft-nav-container">
           <div className="kincraft-main-bar-inner">
             {/* Brand Identity */}
-            <a href="/" className="kincraft-brand-link" aria-label="KinCraft Home">
-              <KinCraftLogo variant={isDark ? "dark" : "horizontal"} height={46} />
+            <a
+              href="/"
+              className="kincraft-brand-link"
+              aria-label="KinCraft Home"
+            >
+              <KinCraftLogo
+                variant={isDark ? "dark" : "horizontal"}
+                height={46}
+              />
             </a>
 
             {/* Central Search Bar */}
@@ -237,105 +249,128 @@ function NavBar() {
                 className="kincraft-theme-toggle-btn"
                 onClick={toggleTheme}
                 title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                aria-label={
+                  isDark ? "Switch to Light Mode" : "Switch to Dark Mode"
+                }
               >
                 <span className="material-symbols-outlined theme-icon">
                   {isDark ? "light_mode" : "dark_mode"}
                 </span>
-                <span className="theme-toggle-text">{isDark ? "Light" : "Dark"}</span>
+                <span className="theme-toggle-text">
+                  {isDark ? "Light" : "Dark"}
+                </span>
               </button>
 
-              {/* Wishlist */}
-              <a
-                href="#wishlist"
-                className="kincraft-action-btn"
-                title="View Saved Artisan Crafts"
-              >
-                <span className="material-symbols-outlined">favorite</span>
-                <span>Wishlist</span>
-                <span className="badge-pill">{wishlistCount}</span>
-              </a>
+              {/* Wishlist & Cart (Available for Authenticated Patrons) */}
+              {isAuthenticated && user ? (
+                <>
+                  <a
+                    href="#wishlist"
+                    className="kincraft-action-btn"
+                    title="View Saved Artisan Crafts"
+                  >
+                    <span className="material-symbols-outlined">favorite</span>
+                    <span>Wishlist</span>
+                    <span className="badge-pill">{wishlistCount}</span>
+                  </a>
 
-              {/* Cart Drawer Button */}
-              <a
-                href="#cart"
-                className="kincraft-cart-btn"
-                title="Open Shopping Cart"
-              >
-                <span className="material-symbols-outlined kincraft-cart-icon fill">
-                  local_mall
-                </span>
-                <div className="kincraft-cart-info">
-                  <span className="kincraft-cart-count">
-                    {cartItemsCount} items
-                  </span>
-                  <span className="kincraft-cart-artisans">
-                    from {cartArtisansCount} artisans
-                  </span>
-                </div>
-              </a>
-
-              {/* User Profile */}
-              <div className="kincraft-user-wrapper" ref={userMenuRef}>
-                <button
-                  type="button"
-                  className="kincraft-user-btn"
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  aria-expanded={isUserMenuOpen}
-                >
-                  <div className="kincraft-user-avatar">MV</div>
-                  <div className="kincraft-user-text">
-                    <span className="kincraft-user-name">Meera Verma</span>
-                    <span className="kincraft-user-tier">Patron Member</span>
-                  </div>
-                  <span className="material-symbols-outlined text-xs">
-                    expand_more
-                  </span>
-                </button>
-
-                {isUserMenuOpen && (
-                  <div className="kincraft-user-dropdown">
-                    <div className="kincraft-user-dropdown-header">
-                      <strong>Meera Verma</strong>
-                      <span>Patron Member • Tier 1</span>
+                  <a
+                    href="#cart"
+                    className="kincraft-cart-btn"
+                    title="Open Shopping Cart"
+                  >
+                    <span className="material-symbols-outlined kincraft-cart-icon fill">
+                      local_mall
+                    </span>
+                    <div className="kincraft-cart-info">
+                      <span className="kincraft-cart-count">
+                        {cartItemsCount} items
+                      </span>
+                      <span className="kincraft-cart-artisans">
+                        from {cartArtisansCount} artisans
+                      </span>
                     </div>
-                    <a href="#orders">
-                      <span className="material-symbols-outlined text-base">
-                        package_2
+                  </a>
+                </>
+              ) : null}
+
+              {/* User Profile or Sign In */}
+              {isAuthenticated && user ? (
+                <div className="kincraft-user-wrapper" ref={userMenuRef}>
+                  <button
+                    type="button"
+                    className="kincraft-user-btn"
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    aria-expanded={isUserMenuOpen}
+                  >
+                    <div className="kincraft-user-avatar">
+                      {user.avatar_initials || "KC"}
+                    </div>
+                    <div className="kincraft-user-text">
+                      <span className="kincraft-user-name">{user.name}</span>
+                      <span className="kincraft-user-tier">
+                        {user.membership_tier || user.role}
                       </span>
-                      <span>Artisan Orders</span>
-                    </a>
-                    <a href="#impact">
-                      <span className="material-symbols-outlined text-base">
-                        volunteer_activism
-                      </span>
-                      <span>Artisan Impact Portfolio</span>
-                    </a>
-                    <a href="#favorites">
-                      <span className="material-symbols-outlined text-base">
-                        bookmark_heart
-                      </span>
-                      <span>Saved Collectives</span>
-                    </a>
-                    <hr />
-                    <a href="#settings">
-                      <span className="material-symbols-outlined text-base">
-                        settings
-                      </span>
-                      <span>Account Settings</span>
-                    </a>
-                    <button
-                      type="button"
-                      onClick={() => setIsUserMenuOpen(false)}
-                    >
-                      <span className="material-symbols-outlined text-base">
-                        logout
-                      </span>
-                      <span>Sign Out</span>
-                    </button>
-                  </div>
-                )}
-              </div>
+                    </div>
+                    <span className="material-symbols-outlined text-xs">
+                      expand_more
+                    </span>
+                  </button>
+
+                  {isUserMenuOpen && (
+                    <div className="kincraft-user-dropdown">
+                      <div className="kincraft-user-dropdown-header">
+                        <strong>{user.name}</strong>
+                        <span>{user.membership_tier || user.role}</span>
+                      </div>
+                      <a href="#orders">
+                        <span className="material-symbols-outlined text-base">
+                          package_2
+                        </span>
+                        <span>Artisan Orders</span>
+                      </a>
+                      <a href="#impact">
+                        <span className="material-symbols-outlined text-base">
+                          volunteer_activism
+                        </span>
+                        <span>Artisan Impact Portfolio</span>
+                      </a>
+                      <a href="#favorites">
+                        <span className="material-symbols-outlined text-base">
+                          bookmark_heart
+                        </span>
+                        <span>Saved Collectives</span>
+                      </a>
+                      <hr />
+                      <Link to="/auth" onClick={() => setIsUserMenuOpen(false)}>
+                        <span className="material-symbols-outlined text-base">
+                          switch_account
+                        </span>
+                        <span>Switch Account / Portal</span>
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          logout();
+                          setIsUserMenuOpen(false);
+                        }}
+                      >
+                        <span className="material-symbols-outlined text-base">
+                          logout
+                        </span>
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link to="/auth" className="kincraft-signin-btn">
+                  <span className="material-symbols-outlined text-sm">
+                    account_circle
+                  </span>
+                  <span>Sign In</span>
+                </Link>
+              )}
 
               {/* Mobile Hamburger Toggle */}
               <button
@@ -453,9 +488,7 @@ function NavBar() {
         </div>
       </div>
 
-      {/* ===================================================================
-          MOBILE EXPANDABLE DRAWER
-          =================================================================== */}
+      {/* MOBILE EXPANDABLE DRAWER*/}
       <div
         className={`kincraft-mobile-drawer ${isMobileMenuOpen ? "open" : ""}`}
       >
@@ -553,6 +586,54 @@ function NavBar() {
           >
             Platform Admin &amp; Compliance
           </a>
+        </div>
+
+        <div className="kincraft-mobile-user">
+          {isAuthenticated && user ? (
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <div className="kincraft-user-avatar">
+                  {user.avatar_initials || "KC"}
+                </div>
+                <div>
+                  <strong className="block text-sm">{user.name}</strong>
+                  <span className="text-xs text-[#66685F] dark:text-[#B5C5AE]">
+                    {user.membership_tier || user.role}
+                  </span>
+                </div>
+              </div>
+              <div className="flex gap-2 pt-2">
+                <Link
+                  to="/auth"
+                  className="flex-1 text-center py-2 px-3 text-xs font-semibold rounded-lg bg-[#2F4F3E] text-white"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Switch Role
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    logout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex-1 text-center py-2 px-3 text-xs font-semibold rounded-lg bg-[#A65A45] text-white"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Link
+              to="/auth"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#2F4F3E] text-white font-medium text-sm"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <span className="material-symbols-outlined text-sm">
+                account_circle
+              </span>
+              <span>Sign In to KinCraft</span>
+            </Link>
+          )}
         </div>
       </div>
     </header>

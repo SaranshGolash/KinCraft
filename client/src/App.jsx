@@ -2,7 +2,9 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
+import Auth from "./pages/Auth";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 
 function FloatingThemeToggle() {
   const { isDark, toggleTheme } = useTheme();
@@ -25,19 +27,23 @@ function FloatingThemeToggle() {
 function App() {
   return (
     <ThemeProvider>
-      <Router
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<Landing />} />
-          </Routes>
-          <FloatingThemeToggle />
-        </div>
-      </Router>
+      <AuthProvider>
+        <Router
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/login" element={<Auth />} />
+            </Routes>
+            <FloatingThemeToggle />
+          </div>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

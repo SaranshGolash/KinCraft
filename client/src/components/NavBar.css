@@ -1075,3 +1075,51 @@ body.dark .kincraft-mobile-cat-link:hover {
   background-color: #20352A;
   color: var(--color-antique-gold);
 }
+
+/* Sign In Button & User Actions */
+.kincraft-signin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.9rem;
+  background-color: var(--color-deep-forest-green);
+  color: var(--color-soft-white);
+  border: 1px solid var(--color-deep-forest-green);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.kincraft-signin-btn:hover {
+  background-color: var(--color-dark-forest);
+  color: var(--color-soft-white);
+  transform: translateY(-1px);
+}
+
+html.dark .kincraft-signin-btn,
+body.dark .kincraft-signin-btn {
+  background-color: #2F4F3E;
+  border-color: #3d6350;
+  color: #FFFDF9;
+}
+
+html.dark .kincraft-signin-btn:hover,
+body.dark .kincraft-signin-btn:hover {
+  background-color: #20382E;
+  color: var(--color-antique-gold);
+}
+
+.kincraft-mobile-user {
+  padding: 0.85rem 1rem;
+  border-top: 1px solid var(--color-warm-border);
+  margin-top: 0.5rem;
+}
+
+html.dark .kincraft-mobile-user,
+body.dark .kincraft-mobile-user {
+  border-top-color: #2F4D3C;
+}
+
