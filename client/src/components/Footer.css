@@ -1,0 +1,176 @@
+.kincraft-footer {
+  width: 100%;
+  background-color: var(--color-dark-forest, #20382e);
+  color: var(--color-soft-white, #fffdf9);
+  padding-top: 3.5rem;
+  padding-bottom: 2rem;
+  font-family: var(--font-body);
+  border-top: 1px solid rgba(217, 164, 65, 0.15);
+}
+
+.kincraft-footer-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Main Grid */
+.kincraft-footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2.5rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Brand Column */
+.kincraft-footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-right: 1.5rem;
+}
+
+.kincraft-footer-logo-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.kincraft-footer-mission {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: #c5d1c6;
+  margin: 0;
+  text-align: left;
+}
+
+/* Transparent Commission Pledge Card */
+.kincraft-pledge-card {
+  background-color: var(--color-deep-forest-green, #2f4f3e);
+  border: 1px solid rgba(217, 164, 65, 0.25);
+  border-radius: 12px;
+  padding: 1.15rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  text-align: left;
+}
+
+.kincraft-pledge-icon {
+  color: var(--color-antique-gold, #d9a441);
+  font-size: 1.65rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.kincraft-pledge-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-soft-white, #fffdf9);
+  margin-bottom: 0.3rem;
+}
+
+.kincraft-pledge-desc {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #c5d1c6;
+  margin: 0;
+}
+
+/* Nav Link Columns */
+.kincraft-footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  text-align: left;
+}
+
+.kincraft-footer-heading {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-antique-gold, #d9a441);
+  margin-bottom: 0.75rem;
+}
+
+.kincraft-footer-link {
+  font-size: 0.85rem;
+  color: #b5c5ae;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  padding: 0.15rem 0;
+  display: inline-block;
+}
+
+.kincraft-footer-link:hover {
+  color: var(--color-soft-white, #fffdf9);
+  transform: translateX(3px);
+  text-decoration: none;
+}
+
+/* Bottom Bar */
+.kincraft-footer-bottom {
+  padding-top: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  font-size: 0.78rem;
+  color: #9eaba0;
+}
+
+.kincraft-footer-security {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.kincraft-footer-security .material-symbols-outlined {
+  color: var(--color-antique-gold, #d9a441);
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.kincraft-footer-copyright {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .kincraft-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .kincraft-footer-brand-col {
+    grid-column: 1 / -1;
+    padding-right: 0;
+    max-width: 650px;
+  }
+}
+
+@media (max-width: 640px) {
+  .kincraft-footer {
+    padding-top: 2.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .kincraft-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .kincraft-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .kincraft-footer-copyright {
+    text-align: left;
+  }
+}

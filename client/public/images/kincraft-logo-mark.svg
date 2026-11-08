@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%" fill="none" role="img" aria-label="KinCraft Artisan Emblem">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F2CB70"/>
+      <stop offset="50%" stop-color="#D9A441"/>
+      <stop offset="100%" stop-color="#AC7720"/>
+    </linearGradient>
+    <linearGradient id="forestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3C6650"/>
+      <stop offset="100%" stop-color="#20382E"/>
+    </linearGradient>
+    <linearGradient id="terracottaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BE6B54"/>
+      <stop offset="100%" stop-color="#8F4633"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D9A441" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#D9A441" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#20382E" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient Glow -->
+  <circle cx="60" cy="60" r="56" fill="url(#sunGlow)"/>
+
+  <!-- Outer Artisan Rim with Traditional Notch Marks (12 Spokes) -->
+  <circle cx="60" cy="60" r="54" stroke="url(#goldGrad)" stroke-width="1.8" stroke-dasharray="2 6.85" stroke-linecap="round"/>
+  <circle cx="60" cy="60" r="49" stroke="url(#goldGrad)" stroke-width="1" stroke-opacity="0.7"/>
+
+  <!-- 8 Ornamental Dots on Cardinal & Ordinal Points -->
+  <g fill="url(#goldGrad)">
+    <circle cx="60" cy="8" r="1.8"/>
+    <circle cx="96.77" cy="23.23" r="1.8"/>
+    <circle cx="112" cy="60" r="1.8"/>
+    <circle cx="96.77" cy="96.77" r="1.8"/>
+    <circle cx="60" cy="112" r="1.8"/>
+    <circle cx="23.23" cy="96.77" r="1.8"/>
+    <circle cx="8" cy="60" r="1.8"/>
+    <circle cx="23.23" cy="23.23" r="1.8"/>
+  </g>
+
+  <!-- Concentric Inner Ground -->
+  <circle cx="60" cy="60" r="44" fill="#20382E" filter="url(#subtleShadow)"/>
+  <circle cx="60" cy="60" r="42.5" stroke="url(#goldGrad)" stroke-width="0.8" stroke-opacity="0.5"/>
+
+  <!-- Interlaced Heritage Knot Motif: Handloom Weave & Terracotta Vessel curves -->
+  <!-- 4 Deep Green & Gold Weaver Loops (0, 90, 180, 270 deg) -->
+  <g transform="translate(60,60)">
+    <!-- Cardinal Petals / Loops (Craft line) -->
+    <g id="petalSet">
+      <!-- Top Loop -->
+      <path d="M 0 -7 C -14 -16, -18 -31, 0 -38 C 18 -31, 14 -16, 0 -7 Z" fill="#2F4F3E" stroke="url(#goldGrad)" stroke-width="1.2"/>
+      <!-- Bottom Loop -->
+      <path d="M 0 7 C -14 16, -18 31, 0 38 C 18 31, 14 16, 0 7 Z" fill="#2F4F3E" stroke="url(#goldGrad)" stroke-width="1.2"/>
+      <!-- Right Loop -->
+      <path d="M 7 0 C 16 -14, 31 -18, 38 0 C 31 18, 16 14, 7 0 Z" fill="#2F4F3E" stroke="url(#goldGrad)" stroke-width="1.2"/>
+      <!-- Left Loop -->
+      <path d="M -7 0 C -16 -14, -31 -18, -38 0 C -31 18, -16 14, -7 0 Z" fill="#2F4F3E" stroke="url(#goldGrad)" stroke-width="1.2"/>
+    </g>
+
+    <!-- Diagonal Terracotta Loops (Interlocking Weave at 45 deg) -->
+    <g transform="rotate(45)">
+      <!-- Top Loop -->
+      <path d="M 0 -5.5 C -11 -13, -15 -25, 0 -31 C 15 -25, 11 -13, 0 -5.5 Z" fill="url(#terracottaGrad)" stroke="url(#goldGrad)" stroke-width="1"/>
+      <!-- Bottom Loop -->
+      <path d="M 0 5.5 C -11 13, -15 25, 0 31 C 15 25, 11 13, 0 5.5 Z" fill="url(#terracottaGrad)" stroke="url(#goldGrad)" stroke-width="1"/>
+      <!-- Right Loop -->
+      <path d="M 5.5 0 C 13 -11, 25 -15, 31 0 C 25 15, 13 11, 5.5 0 Z" fill="url(#terracottaGrad)" stroke="url(#goldGrad)" stroke-width="1"/>
+      <!-- Left Loop -->
+      <path d="M -5.5 0 C -13 -11, -25 -15, -31 0 C -25 15, -13 11, -5.5 0 Z" fill="url(#terracottaGrad)" stroke="url(#goldGrad)" stroke-width="1"/>
+    </g>
+
+    <!-- Center Artisan Spindle / Wheel Hub -->
+    <circle cx="0" cy="0" r="10" fill="#20382E" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <!-- 8-Pointed Star of Heritage Excellence -->
+    <path d="M 0 -8 L 2.4 -2.4 L 8 0 L 2.4 2.4 L 0 8 L -2.4 2.4 L -8 0 L -2.4 -2.4 Z" fill="url(#goldGrad)"/>
+    <circle cx="0" cy="0" r="2.2" fill="#FFFDF9"/>
+  </g>
+</svg>

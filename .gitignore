@@ -3,3 +3,5 @@ node_modules
 dist
 client/dist
 GEMINI.md
+generate-logos.mjs
+KinCraftLogo.jsx

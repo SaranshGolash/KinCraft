@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 80" width="100%" height="100%" fill="none" role="img" aria-label="KinCraft - Heritage Artisan Collective">
+  <defs>
+    <linearGradient id="dkGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5D382"/>
+      <stop offset="50%" stop-color="#D9A441"/>
+      <stop offset="100%" stop-color="#C28B2B"/>
+    </linearGradient>
+    <linearGradient id="dkTerracottaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C4735D"/>
+      <stop offset="100%" stop-color="#A65A45"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left: Emblem Mark -->
+  <g transform="translate(10, 8)">
+    <circle cx="32" cy="32" r="29.5" stroke="url(#dkGoldGrad)" stroke-width="1.2" stroke-dasharray="1.5 4.5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="26.5" stroke="url(#dkGoldGrad)" stroke-width="0.8" stroke-opacity="0.8"/>
+
+    <!-- In Dark Mode: Warm Soft White / Ivory background to make mark pop -->
+    <circle cx="32" cy="32" r="24" fill="#2A483B" stroke="url(#dkGoldGrad)" stroke-width="1"/>
+
+    <!-- Emblem Petals -->
+    <g transform="translate(32, 32) scale(0.55)">
+      <!-- Cardinal Loops -->
+      <path d="M 0 -7 C -14 -16, -18 -31, 0 -38 C 18 -31, 14 -16, 0 -7 Z" fill="#FFFDF9" stroke="url(#dkGoldGrad)" stroke-width="1.4"/>
+      <path d="M 0 7 C -14 16, -18 31, 0 38 C 18 31, 14 16, 0 7 Z" fill="#FFFDF9" stroke="url(#dkGoldGrad)" stroke-width="1.4"/>
+      <path d="M 7 0 C 16 -14, 31 -18, 38 0 C 31 18, 16 14, 7 0 Z" fill="#FFFDF9" stroke="url(#dkGoldGrad)" stroke-width="1.4"/>
+      <path d="M -7 0 C -16 -14, -31 -18, -38 0 C -31 18, -16 14, -7 0 Z" fill="#FFFDF9" stroke="url(#dkGoldGrad)" stroke-width="1.4"/>
+
+      <!-- Diagonal Loops -->
+      <g transform="rotate(45)">
+        <path d="M 0 -5 C -11 -13, -15 -25, 0 -31 C 15 -25, 11 -13, 0 -5 Z" fill="url(#dkTerracottaGrad)" stroke="url(#dkGoldGrad)" stroke-width="1.2"/>
+        <path d="M 0 5 C -11 13, -15 25, 0 31 C 15 25, 11 13, 0 5 Z" fill="url(#dkTerracottaGrad)" stroke="url(#dkGoldGrad)" stroke-width="1.2"/>
+        <path d="M 5 0 C 13 -11, 25 -15, 31 0 C 25 15, 13 11, 5 0 Z" fill="url(#dkTerracottaGrad)" stroke="url(#dkGoldGrad)" stroke-width="1.2"/>
+        <path d="M -5 0 C -13 -11, -25 -15, -31 0 C -25 15, -13 11, -5 0 Z" fill="url(#dkTerracottaGrad)" stroke="url(#dkGoldGrad)" stroke-width="1.2"/>
+      </g>
+
+      <!-- Center Star -->
+      <circle cx="0" cy="0" r="9" fill="#20382E" stroke="url(#dkGoldGrad)" stroke-width="1.2"/>
+      <path d="M 0 -7 L 2 -2 L 7 0 L 2 2 L 0 7 L -2 2 L -7 0 L -2 -2 Z" fill="url(#dkGoldGrad)"/>
+      <circle cx="0" cy="0" r="1.8" fill="#FFFDF9"/>
+    </g>
+  </g>
+
+  <!-- Divider -->
+  <line x1="88" y1="18" x2="88" y2="62" stroke="#416353" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Right: Typography for Dark Background -->
+  <g transform="translate(104, 0)">
+    <text x="0" y="44" font-family="'Playfair Display', Georgia, serif" font-size="34" font-weight="700" letter-spacing="0.3" fill="#FFFDF9">
+      Kin<tspan fill="#D9A441">Craft</tspan>
+    </text>
+    <text x="1.5" y="62" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9" font-weight="600" letter-spacing="3.2" fill="#B5C5AE">
+      HERITAGE ARTISAN COLLECTIVE
+    </text>
+    <path d="M 2 48.5 L 180 48.5" stroke="url(#dkGoldGrad)" stroke-width="1.2" stroke-linecap="round" stroke-opacity="0.8"/>
+    <circle cx="184" cy="48.5" r="1.6" fill="#D9A441"/>
+  </g>
+</svg>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import KinCraftLogo from "./KinCraftLogo";
 import "./NavBar.css";
 
 function NavBar() {
@@ -170,51 +171,8 @@ function NavBar() {
         <div className="kincraft-nav-container">
           <div className="kincraft-main-bar-inner">
             {/* Brand Identity */}
-            <a href="/" className="kincraft-brand-link">
-              <div className="kincraft-brand-logo-icon">
-                <svg
-                  width="26"
-                  height="26"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  {/* Traditional craft emblem / charkha-pottery geometric motif */}
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="9"
-                    stroke="var(--color-antique-gold)"
-                    strokeWidth="1.5"
-                  />
-                  <path
-                    d="M12 3v18M3 12h18"
-                    stroke="var(--color-soft-white)"
-                    strokeWidth="1.2"
-                  />
-                  <path
-                    d="m5.6 5.6 12.8 12.8M18.4 5.6 5.6 18.4"
-                    stroke="var(--color-antique-gold)"
-                    strokeWidth="1.2"
-                  />
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="3.5"
-                    fill="var(--color-antique-gold)"
-                    stroke="none"
-                  />
-                </svg>
-              </div>
-              <div className="kincraft-brand-text">
-                <span className="kincraft-brand-title">KinCraft</span>
-                <span className="kincraft-brand-tagline">
-                  HERITAGE ARTISAN COLLECTIVE
-                </span>
-              </div>
+            <a href="/" className="kincraft-brand-link" aria-label="KinCraft Home">
+              <KinCraftLogo variant="horizontal" height={46} />
             </a>
 
             {/* Central Search Bar */}
