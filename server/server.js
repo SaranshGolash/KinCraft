@@ -8,6 +8,10 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const REDIRECT_URI = "http://localhost:3000/auth/google/callback";
+
 // Middleware
 app.use(
   cors({
@@ -345,46 +349,130 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// ============================================================================
 // AUTHENTICATION ROUTES
-// ============================================================================
+
+// User redirection to Google OAuth server
+app.get("/auth/google", (req, res) => {
+  const rootUrl = "https://google.com";
+  const options = {
+    redirect_uri: REDIRECT_URI,
+    client_id: CLIENT_ID,
+    access_type: "offline",
+    response_type: "code",
+    prompt: "consent",
+    scope: ["https://googleapis.com", "https://googleapis.com"].join(" "),
+  };
+
+  const qs = new URLSearchParams(options);
+  res.redirect(`${rootUrl}?${qs.toString()}`);
+});
+
+app.get("/auth/google/callback", async (req, res) => {
+  const code = req.query.code;
+  if (!code) {
+    return res.status(400).send("Authorization code missing.");
+  }
+  try {
+    // Exchange authorization code for access token
+    const tokenUrl = "https://googleapis.com";
+    const tokenResponse = await fetch(tokenUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        code,
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        redirect_uri: REDIRECT_URI,
+        grant_type: "authorization_code",
+      }),
+    });
+
+    const tokens = await tokenResponse.json();
+
+    if (!tokenResponse.ok) {
+      throw new Error(tokens.error_description || "Failed to fetch tokens");
+    }
+
+    // Use the access token to fetch user profile info
+    const userinfoUrl = "https://googleapis.com";
+    const userinfoResponse = await fetch(userinfoUrl, {
+      headers: { Authorization: `Bearer ${tokens.access_token}` },
+    });
+
+    const userData = await userinfoResponse.json();
+    res.json({
+      message: "Authentication successful!",
+      user: userData,
+      tokens: {
+        access_token: tokens.access_token,
+        refresh_token: tokens.refresh_token,
+        expires_in: tokens.expires_in,
+      },
+    });
+  } catch (error) {
+    console.error("OAuth Error:", error);
+    res.status(500).send(`Authentication failed: ${error.message}`);
+  }
+});
 
 // POST /api/auth/login
 app.post("/api/auth/login", async (req, res) => {
   const { identifier, password, role = "Customer" } = req.body;
 
   if (!identifier) {
-    return res.status(400).json({ success: false, message: "Email or mobile number is required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Email or mobile number is required" });
   }
 
   try {
     if (isDbConnected) {
       const userRes = await pool.query(
         "SELECT id, name, email, role, membership_tier, avatar_initials FROM users WHERE email = $1 OR phone = $1",
-        [identifier]
+        [identifier],
       );
 
       if (userRes.rows.length > 0) {
-        return res.json({ success: true, user: userRes.rows[0], message: "Authentication successful" });
+        return res.json({
+          success: true,
+          user: userRes.rows[0],
+          message: "Authentication successful",
+        });
       }
     }
 
     // Fallback or In-Memory authentication
     const isMeera = identifier.toLowerCase().includes("meera");
-    const name = isMeera ? "Meera Verma" : identifier.split("@")[0].replace(".", " ").replace(/\b\w/g, l => l.toUpperCase());
-    const initials = isMeera ? "MV" : (identifier.slice(0, 2).toUpperCase());
-    const tier = role === "Artisan" ? "Master Artisan • Verified" : role === "Admin" ? "Compliance Officer" : "Patron Member • Tier 1";
+    const name = isMeera
+      ? "Meera Verma"
+      : identifier
+          .split("@")[0]
+          .replace(".", " ")
+          .replace(/\b\w/g, (l) => l.toUpperCase());
+    const initials = isMeera ? "MV" : identifier.slice(0, 2).toUpperCase();
+    const tier =
+      role === "Artisan"
+        ? "Master Artisan • Verified"
+        : role === "Admin"
+          ? "Compliance Officer"
+          : "Patron Member • Tier 1";
 
     const user = {
       id: 1,
       name,
-      email: identifier.includes("@") ? identifier : `${identifier}@patron.kincraft.org`,
+      email: identifier.includes("@")
+        ? identifier
+        : `${identifier}@patron.kincraft.org`,
       role,
       membership_tier: tier,
-      avatar_initials: initials
+      avatar_initials: initials,
     };
 
-    return res.json({ success: true, user, message: "Authentication successful" });
+    return res.json({
+      success: true,
+      user,
+      message: "Authentication successful",
+    });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -392,25 +480,47 @@ app.post("/api/auth/login", async (req, res) => {
 
 // POST /api/auth/register
 app.post("/api/auth/register", async (req, res) => {
-  const { name, email, password, role = "Customer", craftCluster = "" } = req.body;
+  const {
+    name,
+    email,
+    password,
+    role = "Customer",
+    craftCluster = "",
+  } = req.body;
 
   if (!name || !email) {
-    return res.status(400).json({ success: false, message: "Name and email are required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Name and email are required" });
   }
 
   try {
-    const initials = name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) || "KP";
-    const tier = role === "Artisan" ? "Artisan Guild Member" : "Patron Member • Tier 1";
+    const initials =
+      name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2) || "KP";
+    const tier =
+      role === "Artisan" ? "Artisan Guild Member" : "Patron Member • Tier 1";
 
     if (isDbConnected) {
-      const insertRes = await pool.query(`
+      const insertRes = await pool.query(
+        `
         INSERT INTO users (name, email, role, membership_tier, avatar_initials)
         VALUES ($1, $2, $3, $4, $5)
         ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role
         RETURNING id, name, email, role, membership_tier, avatar_initials
-      `, [name, email, role, tier, initials]);
+      `,
+        [name, email, role, tier, initials],
+      );
 
-      return res.json({ success: true, user: insertRes.rows[0], message: "Registration successful" });
+      return res.json({
+        success: true,
+        user: insertRes.rows[0],
+        message: "Registration successful",
+      });
     }
 
     const newUser = {
@@ -420,10 +530,14 @@ app.post("/api/auth/register", async (req, res) => {
       role,
       membership_tier: tier,
       avatar_initials: initials,
-      craft_cluster: craftCluster
+      craft_cluster: craftCluster,
     };
 
-    return res.json({ success: true, user: newUser, message: "Registration successful" });
+    return res.json({
+      success: true,
+      user: newUser,
+      message: "Registration successful",
+    });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -434,7 +548,7 @@ app.get("/api/auth/me", (req, res) => {
   res.json({
     success: false,
     user: null,
-    message: "No active session"
+    message: "No active session",
   });
 });
 
@@ -1087,12 +1201,10 @@ app.post("/api/db/init", async (req, res) => {
 
 // 404 Handler
 app.use((req, res) => {
-  res
-    .status(404)
-    .json({
-      success: false,
-      message: `Endpoint ${req.method} ${req.url} not found`,
-    });
+  res.status(404).json({
+    success: false,
+    message: `Endpoint ${req.method} ${req.url} not found`,
+  });
 });
 
 // Start Server

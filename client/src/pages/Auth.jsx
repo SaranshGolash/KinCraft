@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import KinCraftLogo from "../components/KinCraftLogo";
+import Footer from "../components/Footer";
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -207,7 +208,7 @@ export default function Auth() {
             <span className="material-symbols-outlined text-xs">
               {isDark ? "light_mode" : "dark_mode"}
             </span>
-            <span>{isDark ? "Light View" : "Dark View"}</span>
+            <span>{isDark ? "Light Mode" : "Dark Mode"}</span>
           </button>
         </div>
       </header>
@@ -572,7 +573,7 @@ export default function Auth() {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
               />
             </svg>
-            <span>Continue with Google OIDC 2.0</span>
+            <span>Continue with Google</span>
           </button>
 
           <div className="relative flex py-2 items-center mb-6">
@@ -776,9 +777,6 @@ export default function Auth() {
                   </span>
                 </label>
               )}
-              <span className="text-[#66685F] dark:text-[#B5C5AE]/70 font-mono text-[11px]">
-                256-bit SSL Escrow
-              </span>
             </div>
 
             {/* Submit Button */}
@@ -880,48 +878,7 @@ export default function Auth() {
       </main>
 
       {/* Footer */}
-      <footer
-        className={`text-xs py-6 px-6 mt-8 border-t transition-colors ${
-          isDark
-            ? "bg-[#111915] text-[#B5C5AE] border-[#2F4F3E]/50"
-            : "bg-[#20382E] text-[#B5C5AE] border-[#2F4F3E]"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-          <p>
-            Protected under India <strong>DPDP Act 2025</strong> &amp; Consumer
-            Protection Rules.
-          </p>
-          <div className="flex space-x-4">
-            <button
-              type="button"
-              onClick={() => setActiveModal("charter")}
-              className="hover:underline text-[#D9A441] cursor-pointer"
-            >
-              Fair-Trade Charter
-            </button>
-            <span>•</span>
-            <button
-              type="button"
-              onClick={() => setActiveModal("artisan-rights")}
-              className="hover:underline text-[#D9A441] cursor-pointer"
-            >
-              Artisan Rights
-            </button>
-            <span>•</span>
-            <button
-              type="button"
-              onClick={() => setActiveModal("privacy")}
-              className="hover:underline text-[#D9A441] cursor-pointer"
-            >
-              Privacy &amp; Escrow
-            </button>
-          </div>
-          <p className="text-stone-400">
-            &copy; 2025 KinCraft India Collective. ISO/IEC 27001 Secure Escrow.
-          </p>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Modal Dialogs for Charter, Rights, Privacy & Forgot Password */}
       {activeModal && (
