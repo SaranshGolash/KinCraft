@@ -38,6 +38,15 @@ export default function Auth() {
   const [successMessage, setSuccessMessage] = useState("");
   const [activeModal, setActiveModal] = useState(null); // 'charter' | 'artisan-rights' | 'privacy' | 'forgot'
 
+  // Check for error parameters in URL query string (e.g. from OAuth redirect)
+  React.useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const err = params.get("error");
+    if (err) {
+      setErrorMessage(decodeURIComponent(err));
+    }
+  }, [location.search]);
+
   // Pre-fill demo profiles based on role
   const handleRoleSelect = (role) => {
     setActiveRole(role);

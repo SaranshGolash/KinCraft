@@ -497,7 +497,43 @@ async function exchangeGoogleCodeAndCreateSession(code, role = "Customer") {
 
   let user = null;
 
-  if (isDbConnected) {
+  // STRICT SECURITY CHECK FOR ADMIN ROLE:
+  // IF the admin role user is not registered in the database then the user cannot log in or signup using Google OAuth for the admin role
+  if (role === "Admin") {
+    let existingAdmin = null;
+
+    if (isDbConnected) {
+      const existing = await pool.query(
+        "SELECT id, name, email, role, membership_tier, avatar_initials, craft_cluster, phone, city, state FROM users WHERE LOWER(email) = LOWER($1)",
+        [googleEmail],
+      );
+      if (existing.rows.length > 0) {
+        existingAdmin = existing.rows[0];
+      }
+    } else {
+      existingAdmin = mockData.users.find(
+        (u) => u.email.toLowerCase() === googleEmail,
+      );
+    }
+
+    if (!existingAdmin) {
+      const err = new Error(
+        `Access Denied: The Google account (${googleEmail}) is not registered in the database as an Administrator. Admin accounts cannot self-register or sign in via Google OAuth without prior platform authorization.`,
+      );
+      err.statusCode = 403;
+      throw err;
+    }
+
+    if (existingAdmin.role !== "Admin") {
+      const err = new Error(
+        `Access Denied: The account (${googleEmail}) is registered with role '${existingAdmin.role}', not 'Admin'. Privilege escalation is prohibited.`,
+      );
+      err.statusCode = 403;
+      throw err;
+    }
+
+    user = existingAdmin;
+  } else if (isDbConnected) {
     const existing = await pool.query(
       "SELECT id, name, email, role, membership_tier, avatar_initials, craft_cluster, phone, city, state FROM users WHERE LOWER(email) = LOWER($1)",
       [googleEmail],
@@ -922,7 +958,7 @@ app.get("/api/auth/me", authenticateToken, async (req, res) => {
       const fallbackUser = {
         name: req.user.name || "KinCraft Patron",
         email: tokenUserEmail || "patron@kincraft.org",
-        role: req.user.role || "Customer",
+        role: req.user.role === "Admin" ? "Customer" : (req.user.role || "Customer"),
         membership_tier: req.user.membership_tier || "Verified Patron",
         avatar_initials: (req.user.name ? req.user.name.slice(0, 2) : "KC").toUpperCase(),
         craft_cluster: req.user.role === "Artisan" ? "Gorakhpur Terracotta Cluster, Uttar Pradesh" : null,
@@ -994,7 +1030,7 @@ app.post("/api/auth/google", async (req, res) => {
       },
       Admin: {
         name: "Compliance Admin",
-        email: "admin.google@kincraft.in",
+        email: "admin@kincraft.in",
         tier: "Platform Compliance & Escrow Officer",
         initials: "AD",
         cluster: null,
@@ -1002,12 +1038,47 @@ app.post("/api/auth/google", async (req, res) => {
     };
 
     const targetProfile = defaultDataByRole[role] || defaultDataByRole.Customer;
+    const targetEmail = (req.body.email || req.body.identifier || targetProfile.email).trim().toLowerCase();
     let user = null;
 
-    if (isDbConnected) {
+    // STRICT SECURITY CHECK FOR ADMIN ROLE:
+    // IF the admin role user is not registered in the database then the user cannot log in or signup using Google OAuth for the admin role
+    if (role === "Admin") {
+      let existingAdmin = null;
+
+      if (isDbConnected) {
+        const existing = await pool.query(
+          "SELECT id, name, email, role, membership_tier, avatar_initials, craft_cluster, phone, city, state FROM users WHERE LOWER(email) = LOWER($1)",
+          [targetEmail],
+        );
+        if (existing.rows.length > 0) {
+          existingAdmin = existing.rows[0];
+        }
+      } else {
+        existingAdmin = mockData.users.find(
+          (u) => u.email.toLowerCase() === targetEmail,
+        );
+      }
+
+      if (!existingAdmin) {
+        return res.status(403).json({
+          success: false,
+          message: `Access Denied: The Google account (${targetEmail}) is not registered in the database as an Administrator. Admin accounts cannot self-register or sign in via Google OAuth without prior platform authorization.`,
+        });
+      }
+
+      if (existingAdmin.role !== "Admin") {
+        return res.status(403).json({
+          success: false,
+          message: `Access Denied: The account (${targetEmail}) is registered with role '${existingAdmin.role}', not 'Admin'. Privilege escalation is prohibited.`,
+        });
+      }
+
+      user = existingAdmin;
+    } else if (isDbConnected) {
       const existing = await pool.query(
         "SELECT id, name, email, role, membership_tier, avatar_initials, craft_cluster, phone, city, state FROM users WHERE LOWER(email) = LOWER($1)",
-        [targetProfile.email],
+        [targetEmail],
       );
 
       if (existing.rows.length > 0) {
@@ -1019,8 +1090,8 @@ app.post("/api/auth/google", async (req, res) => {
            VALUES ($1, $2, $3, $4, $5, $6, $7)
            RETURNING id, name, email, role, membership_tier, avatar_initials, craft_cluster, phone, city, state`,
           [
-            targetProfile.name,
-            targetProfile.email,
+            req.body.name || targetProfile.name,
+            targetEmail,
             dummyHash,
             role,
             targetProfile.tier,
@@ -1032,13 +1103,13 @@ app.post("/api/auth/google", async (req, res) => {
       }
     } else {
       let mockUser = mockData.users.find(
-        (u) => u.email.toLowerCase() === targetProfile.email.toLowerCase(),
+        (u) => u.email.toLowerCase() === targetEmail,
       );
       if (!mockUser) {
         mockUser = {
           id: Date.now(),
-          name: targetProfile.name,
-          email: targetProfile.email,
+          name: req.body.name || targetProfile.name,
+          email: targetEmail,
           role,
           membership_tier: targetProfile.tier,
           avatar_initials: targetProfile.initials,

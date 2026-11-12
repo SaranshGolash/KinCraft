@@ -7,7 +7,12 @@ import KinCraftLogo from "../components/KinCraftLogo";
 export default function GoogleCallback() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { handleGoogleCallback, loginWithToken, getRoleDashboardPath, authFetch } = useAuth();
+  const {
+    handleGoogleCallback,
+    loginWithToken,
+    getRoleDashboardPath,
+    authFetch,
+  } = useAuth();
   const { isDark } = useTheme();
 
   const [status, setStatus] = useState("verifying"); // 'verifying' | 'success' | 'error'
@@ -19,7 +24,8 @@ export default function GoogleCallback() {
 
     async function processOAuth() {
       const code = searchParams.get("code");
-      const role = searchParams.get("state") || searchParams.get("role") || "Customer";
+      const role =
+        searchParams.get("state") || searchParams.get("role") || "Customer";
       const token = searchParams.get("token");
       const error = searchParams.get("error");
       const errorDesc = searchParams.get("error_description");
@@ -31,7 +37,7 @@ export default function GoogleCallback() {
             errorDesc ||
               (error === "access_denied"
                 ? "Google sign-in was cancelled. Please try again when ready."
-                : `Google authentication error: ${error}`),
+                : decodeURIComponent(error)),
           );
         }
         return;
@@ -54,13 +60,17 @@ export default function GoogleCallback() {
               }, 1000);
             } else {
               setStatus("error");
-              setErrorMessage("Could not verify session with authentication server.");
+              setErrorMessage(
+                "Could not verify session with authentication server.",
+              );
             }
           }
         } catch (err) {
           if (isMounted) {
             setStatus("error");
-            setErrorMessage("Connection issue completing authentication. Please retry.");
+            setErrorMessage(
+              "Connection issue completing authentication. Please retry.",
+            );
           }
         }
         return;
@@ -89,7 +99,8 @@ export default function GoogleCallback() {
           if (isMounted) {
             setStatus("error");
             setErrorMessage(
-              err.message || "Failed to exchange authorization code with Google.",
+              err.message ||
+                "Failed to exchange authorization code with Google.",
             );
           }
         }
@@ -99,7 +110,9 @@ export default function GoogleCallback() {
       // If neither code nor token found
       if (isMounted) {
         setStatus("error");
-        setErrorMessage("No authorization code or session token found in callback request.");
+        setErrorMessage(
+          "No authorization code or session token found in callback request.",
+        );
       }
     }
 
@@ -139,7 +152,8 @@ export default function GoogleCallback() {
                 Verifying Google Credentials...
               </h2>
               <p className="text-xs text-[#66685F] dark:text-[#A3B5AA] leading-relaxed">
-                Completing secure cryptographic handshake with Google OIDC 2.0 and establishing your KinCraft patron session.
+                Completing secure cryptographic handshake with Google OIDC 2.0
+                and establishing your KinCraft patron session.
               </p>
             </div>
           )}
@@ -147,13 +161,16 @@ export default function GoogleCallback() {
           {status === "success" && (
             <div className="space-y-5">
               <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                <span className="material-symbols-outlined text-3xl">check_circle</span>
+                <span className="material-symbols-outlined text-3xl">
+                  check_circle
+                </span>
               </div>
               <h2 className="font-heading text-xl font-bold text-[#2F4F3E] dark:text-[#7EB09B]">
                 Welcome to KinCraft, {userName}!
               </h2>
               <p className="text-xs text-[#66685F] dark:text-[#A3B5AA] leading-relaxed">
-                Google authentication confirmed. Directing you to your dedicated artisan dashboard...
+                Google authentication confirmed. Directing you to your dedicated
+                artisan dashboard...
               </p>
             </div>
           )}
@@ -161,7 +178,9 @@ export default function GoogleCallback() {
           {status === "error" && (
             <div className="space-y-5">
               <div className="w-16 h-16 mx-auto rounded-full bg-[#A65A45]/10 text-[#A65A45] flex items-center justify-center">
-                <span className="material-symbols-outlined text-3xl">error</span>
+                <span className="material-symbols-outlined text-3xl">
+                  error
+                </span>
               </div>
               <h2 className="font-heading text-xl font-bold text-[#A65A45]">
                 Authentication Incomplete
@@ -194,4 +213,3 @@ export default function GoogleCallback() {
     </div>
   );
 }
-
