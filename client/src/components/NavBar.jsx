@@ -7,7 +7,7 @@ import "./NavBar.css";
 
 function NavBar() {
   const { isDark, toggleTheme } = useTheme();
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, getRoleDashboardPath } = useAuth();
   // Navigation & filter states
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeEcosystem, setActiveEcosystem] = useState("storefront");
@@ -130,8 +130,8 @@ function NavBar() {
 
               <span className="kincraft-top-divider">|</span>
 
-              <a
-                href="#artisan-studio"
+              <Link
+                to="/dashboard/artisan"
                 className="kincraft-top-link"
                 title="Access Artisan Studio Portal"
                 onClick={() => setActiveEcosystem("artisan")}
@@ -140,7 +140,7 @@ function NavBar() {
                 <span className="material-symbols-outlined text-sm">
                   arrow_forward
                 </span>
-              </a>
+              </Link>
 
               <span className="kincraft-top-divider">|</span>
 
@@ -323,6 +323,21 @@ function NavBar() {
                         <strong>{user.name}</strong>
                         <span>{user.membership_tier || user.role}</span>
                       </div>
+                      <Link
+                        to={getRoleDashboardPath(user.role)}
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <span className="material-symbols-outlined text-base">
+                          dashboard
+                        </span>
+                        <span>
+                          {user.role === "Artisan"
+                            ? "Artisan Studio Portal"
+                            : user.role === "Admin"
+                            ? "Compliance Admin Console"
+                            : "My Patron Dashboard"}
+                        </span>
+                      </Link>
                       <a href="#orders">
                         <span className="material-symbols-outlined text-base">
                           package_2
@@ -441,48 +456,39 @@ function NavBar() {
             </div>
 
             <div className="kincraft-ecosystem-links">
-              <a
-                href="#storefront"
+              <Link
+                to="/"
                 className={`kincraft-eco-link ${
                   activeEcosystem === "storefront" ? "active" : ""
                 }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveEcosystem("storefront");
-                }}
+                onClick={() => setActiveEcosystem("storefront")}
               >
                 Customer Storefront
-              </a>
+              </Link>
 
               <span className="kincraft-eco-bullet">•</span>
 
-              <a
-                href="#artisan-portal"
+              <Link
+                to="/dashboard/artisan"
                 className={`kincraft-eco-link ${
                   activeEcosystem === "artisan" ? "active" : ""
                 }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveEcosystem("artisan");
-                }}
+                onClick={() => setActiveEcosystem("artisan")}
               >
                 Artisan Dashboard (Vendor Portal)
-              </a>
+              </Link>
 
               <span className="kincraft-eco-bullet">•</span>
 
-              <a
-                href="#admin-console"
+              <Link
+                to="/dashboard/admin"
                 className={`kincraft-eco-link ${
                   activeEcosystem === "admin" ? "active" : ""
                 }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveEcosystem("admin");
-                }}
+                onClick={() => setActiveEcosystem("admin")}
               >
                 Platform Admin &amp; Compliance
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -4,12 +4,13 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(120) NOT NULL,
     email VARCHAR(180) UNIQUE NOT NULL,
     password_hash VARCHAR(255),
-    role VARCHAR(30) DEFAULT 'patron', -- 'patron', 'artisan', 'admin'
-    membership_tier VARCHAR(60) DEFAULT 'Patron Member • Tier 1',
+    role VARCHAR(30) DEFAULT 'Customer', -- 'Customer', 'Artisan', 'Admin'
+    membership_tier VARCHAR(80) DEFAULT 'Patron Member • Tier 1',
     avatar_initials VARCHAR(6) DEFAULT 'MV',
-    phone VARCHAR(20),
+    phone VARCHAR(30),
     city VARCHAR(100),
     state VARCHAR(100),
+    craft_cluster VARCHAR(180),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -116,12 +117,17 @@ CREATE TABLE IF NOT EXISTS order_items (
 -- SEED DATA (DML)
 
 -- Seed: Default Patron User (Meera Verma)
-INSERT INTO users (id, name, email, role, membership_tier, avatar_initials, city, state)
+INSERT INTO users (id, name, email, password_hash, role, membership_tier, avatar_initials, city, state)
 VALUES 
-    (1, 'Meera Verma', 'meera.verma@kincraft.org', 'patron', 'Patron Member • Tier 1', 'MV', 'Bengaluru', 'Karnataka')
-ON CONFLICT (id) DO UPDATE SET 
+    (1, 'Meera Verma', 'meera.verma@example.com', '$2b$10$gixQ/SRLhWvQpt7oWeZnSeb2fJ09ASsDJA1W1QKF34hnST8pZxHU.', 'Customer', 'Patron Member • Tier 1', 'MV', 'Bengaluru', 'Karnataka'),
+    (2, 'Meera Verma', 'meera.verma@kincraft.org', '$2b$10$gixQ/SRLhWvQpt7oWeZnSeb2fJ09ASsDJA1W1QKF34hnST8pZxHU.', 'Customer', 'Patron Member • Tier 1', 'MV', 'Bengaluru', 'Karnataka'),
+    (3, 'Karan Kumbhar', 'karan.kumbhar@example.com', '$2b$10$7F9rK1M.gEx7KLqgTjhk2eG48c6DafLKWY1tNKMW8jAyWYQ8Uu3Wq', 'Artisan', 'Master Artisan • Verified GI', 'KK', 'Molela', 'Rajasthan'),
+    (4, 'Compliance Admin', 'admin@kincraft.in', '$2b$10$JceDx6waM3yLHUQxNyKpLutkhp9nzPzp6B30eoYIPPrIOr.n4oov2', 'Admin', 'Platform Compliance & Escrow Officer', 'AD', 'New Delhi', 'Delhi')
+ON CONFLICT (email) DO UPDATE SET 
     name = EXCLUDED.name,
-    email = EXCLUDED.email;
+    password_hash = EXCLUDED.password_hash,
+    role = EXCLUDED.role,
+    membership_tier = EXCLUDED.membership_tier;
 
 -- Seed: Craft Categories
 INSERT INTO categories (id, name, place, material, artisan_count_label, image_url, alt_text)

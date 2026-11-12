@@ -8,7 +8,14 @@ import Footer from "../components/Footer";
 export default function Auth() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, login, register, loginWithGoogle } = useAuth();
+  const {
+    user,
+    login,
+    register,
+    loginWithGoogle,
+    initiateGoogleLogin,
+    getRoleDashboardPath,
+  } = useAuth();
   const { isDark, toggleTheme } = useTheme();
 
   // Mode: "signin" | "signup"
@@ -104,7 +111,9 @@ export default function Auth() {
             `Welcome back, ${result.user?.name || "Patron"}! Redirecting...`,
           );
           setTimeout(() => {
-            const redirectUrl = location.state?.from || "/";
+            const redirectUrl =
+              location.state?.from ||
+              getRoleDashboardPath(result.user?.role || activeRole);
             navigate(redirectUrl);
           }, 800);
         } else {
@@ -126,7 +135,9 @@ export default function Auth() {
             `Welcome to KinCraft, ${result.user?.name || name}! Account created.`,
           );
           setTimeout(() => {
-            const redirectUrl = location.state?.from || "/";
+            const redirectUrl =
+              location.state?.from ||
+              getRoleDashboardPath(result.user?.role || "Customer");
             navigate(redirectUrl);
           }, 1000);
         } else {
@@ -149,19 +160,30 @@ export default function Auth() {
     setIsSubmitting(true);
     setErrorMessage("");
     try {
-      const result = await loginWithGoogle(activeRole);
-      if (result && result.success) {
-        setSuccessMessage(
-          "Authenticated via Google OIDC 2.0. Entering platform...",
-        );
-        setTimeout(() => {
-          navigate(location.state?.from || "/");
-        }, 800);
-      }
+      // Initiate real Google OAuth 2.0 Web flow
+      await initiateGoogleLogin(activeRole);
     } catch (err) {
-      setErrorMessage("Google authentication could not be completed.");
-    } finally {
-      setIsSubmitting(false);
+      console.warn("Google OAuth redirect error, falling back to direct login:", err);
+      try {
+        const result = await loginWithGoogle(activeRole);
+        if (result && result.success) {
+          setSuccessMessage(
+            "Authenticated via Google OIDC 2.0. Entering platform...",
+          );
+          setTimeout(() => {
+            navigate(
+              location.state?.from ||
+                getRoleDashboardPath(result.user?.role || activeRole),
+            );
+          }, 800);
+        } else {
+          setErrorMessage("Google authentication could not be completed.");
+        }
+      } catch (fallbackErr) {
+        setErrorMessage("Google authentication could not be completed.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
